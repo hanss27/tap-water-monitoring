@@ -8,40 +8,8 @@ import {Bar, Line, Scatter, Bubble} from "react-chartjs-2"
 
 const weight = [60.0, 60.2, 59.1, 61.4, 59.9, 60.2, 59.8, 58.6, 59.6, 59.2];
 
-    const labels = [
-      "Week 1",
-      "Week 2",
-      "Week 3",
-      "Week 4",
-      "Week 5",
-      "Week 6",
-      "Week 7",
-      "Week 8",
-      "Week 9",
-      "Week 10"
-    ];
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: "My First Dataset",
-          data: weight,
-          fill: true,
-          borderWidth: 2,
-          lineTension: 0.2,
-          pointRadius: 3
-        }
-      ]
-    };
-const PHReadings = [];
-const TurbudityReadings = [];
-let TurbudityTable;
-const TDSReadings = [];
-let TDSTable;
-const TempReadings = [];
-let TempTable;
-const DateReadings = [];
-let DateTable;
+   
+
 
 const options = {
   plugins:{
@@ -71,7 +39,7 @@ const options = {
     },
   },
 };
-export default function Top({ sensor, PHTable }) {
+export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
   return (
 
     <div>
@@ -119,18 +87,7 @@ export default function Top({ sensor, PHTable }) {
         }
             `}</style>
       </div>
-      <div style = {{
-        marginTop: '200px',
-        marginBottom: '200px',
-        paddingBottom: '200px'
-      }}>
-     
-      <Line 
-          data = {PHTable} 
-          width="600px" 
-          height="200px" 
-      />
-      </div>
+  
       <div className = "Body"
         style={{
           textAlign: 'center',
@@ -140,7 +97,6 @@ export default function Top({ sensor, PHTable }) {
         }}>
           <h1>
             Kondisi Tap Water Saat Ini
-
           </h1>
           <img src="/logo512.png" alt="New Logo" style={{
     
@@ -149,31 +105,53 @@ export default function Top({ sensor, PHTable }) {
     margin: '0 0 0 0px',
     }} >
   </img>
-  {/* <Line 
-          data={PHTable} 
-          width="100px" 
-          height="200px" 
-          options={{
-          maintainAspectRatio: false
-           }}></Line> */}
-          {/* // style = {{
-          //   maxHeight: '80vh',
-          //   margin: '2rem',
-          //   display: 'flex',
-          //   flexDirection: 'column',
-          //   justifyContent: 'center',
-          //   alignItems: 'center',
-          // }} */}
+
           
-          <h2> SENSOR</h2>
-          
-          <dl>
-            <dt>A title of the graph</dt>
-            <dd className="percentage"><span className="text"> Data 1: 20% </span></dd>
-            <dd className="percentage"><span className="text"> Data 2: 50% </span></dd>
-            <dd className="percentage"><span className="text"> Data 3: 30% </span></dd>
-          </dl>
-          <p>Tes Data</p>
+        <h2> SENSOR</h2>
+        <p>PH Meter</p>  
+        <div style = {{
+          marginTop: '200px',
+          marginBottom: '200px',
+          paddingBottom: '200px',
+          paddingLeft: '200px',
+          paddingRight: '200px'
+        }}>
+        <Line 
+            data = {PHTable} 
+            width="600px" 
+            height="150px" 
+        />
+        </div>
+        
+        <p>TDS Meter</p> 
+        <div style = {{
+          marginTop: '200px',
+          marginBottom: '200px',
+          paddingBottom: '200px',
+          paddingLeft: '200px',
+          paddingRight: '200px'
+        }}>
+        <Line 
+          data = {TDSTable} 
+          width="600px" 
+          height="150px" 
+        />
+        </div>
+
+        <p>Turbudity Meter</p>  
+        <div style = {{
+          marginTop: '200px',
+          marginBottom: '200px',
+          paddingBottom: '200px',
+          paddingLeft: '200px',
+          paddingRight: '200px'
+        }}>
+        <Line 
+          data = {TurbudityTable} 
+          width="600px" 
+          height="150px" 
+        />
+        </div>
           <style jsx>{`
         h1{
           margin: 100px 0px 0px 0px;
@@ -228,7 +206,11 @@ export async function getStaticProps() {
     try {
         const client = await clientPromise;
         const db = client.db("watermonitoring");
-       
+       const PHReadings = [];
+       const TDSReadings = [];
+       const TempReadings = [];
+       const DateReadings = [];
+       const TurbudityReadings = [];
        const sensor = await db
            .collection("waterdatabase")
            .find({})
@@ -248,7 +230,7 @@ export async function getStaticProps() {
        const PHTable = {labels: DateReadings,
         datasets: [
           {
-            label: "My First Dataset",
+            label: "PH",
             data: PHReadings,
             fill: true,
             borderWidth: 2,
@@ -257,11 +239,30 @@ export async function getStaticProps() {
           }
         ]};
 
-      
+        const TurbudityTable = {labels: DateReadings,
+          datasets: [
+            {
+              label: "Turbudity",
+              data: TurbudityReadings,
+              fill: true,
+              borderWidth: 2,
+              lineTension: 1,
+              pointRadius: 3
+            }
+          ]};
+        const TDSTable = {labels: DateReadings,
+          datasets: [
+            {
+              label: "TDS",
+              data: TDSReadings,
+              fill: true,
+              borderWidth: 2,
+              lineTension: 1,
+              pointRadius: 3
+            }
+          ]};
 
-       console.log(PHTable)
-       console.log("PH Table")
-       console.log(PHTable)
+
        console.log("Turbudity From MONGODB");
        console.log(TurbudityReadings);
        console.log("TDS From MONGODB");
@@ -270,9 +271,14 @@ export async function getStaticProps() {
        console.log(TempReadings);
        console.log("Date from MONGODB");
        console.log(DateReadings);
+
         return {
-            props: { sensor: JSON.parse(JSON.stringify(sensor))
-            ,PHTable: JSON.parse(JSON.stringify(PHTable)) }
+            props: { 
+             sensor: JSON.parse(JSON.stringify(sensor))
+            ,PHTable: JSON.parse(JSON.stringify(PHTable))
+            ,TurbudityTable: JSON.parse(JSON.stringify(TurbudityTable))
+            ,TDSTable: JSON.parse(JSON.stringify(TDSTable))
+          }
         };
     } catch (e) {
         console.error(e);
