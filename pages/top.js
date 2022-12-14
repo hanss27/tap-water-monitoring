@@ -1,8 +1,77 @@
 import clientPromise from "../lib/mongodb";
+import {CategoryScale, Chart as ChartJS, Filler, Legend, LinearScale, LineElement, PointElement, Title, Tooltip} from "chart.js"; 
+
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Title, Tooltip, Legend);
+import {Bar, Line, Scatter, Bubble} from "react-chartjs-2"
 
 // import logo from "../resources/logo512.png";
 
-export default function Top({ sensor }) {
+const weight = [60.0, 60.2, 59.1, 61.4, 59.9, 60.2, 59.8, 58.6, 59.6, 59.2];
+
+    const labels = [
+      "Week 1",
+      "Week 2",
+      "Week 3",
+      "Week 4",
+      "Week 5",
+      "Week 6",
+      "Week 7",
+      "Week 8",
+      "Week 9",
+      "Week 10"
+    ];
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: "My First Dataset",
+          data: weight,
+          fill: true,
+          borderWidth: 2,
+          lineTension: 0.2,
+          pointRadius: 3
+        }
+      ]
+    };
+const PHReadings = [];
+const TurbudityReadings = [];
+let TurbudityTable;
+const TDSReadings = [];
+let TDSTable;
+const TempReadings = [];
+let TempTable;
+const DateReadings = [];
+let DateTable;
+
+const options = {
+  plugins:{
+    legend:{
+      display: false,
+    },
+  },
+  elements: {
+    line:{
+      tension: 0,
+      borderWidth: 2,
+      borderColor: "rgba(47,97,68,1)",
+      fill: "start",
+      backgroundColor: "rgba(47,97,68, 0.3)"
+    },
+    point:{
+      radius: 0,
+      hitRadius: 0,
+    },
+  },
+  scales: {
+    xAxis: {
+      display: false,
+    },
+    yAxis: {
+      display: false,
+    },
+  },
+};
+export default function Top({ sensor, PHTable }) {
   return (
 
     <div>
@@ -10,21 +79,21 @@ export default function Top({ sensor }) {
         style={{
           padding: '0',
           backgroundColor:  'rgb(0, 0, 0)',
-          textAlign: 'center',
-          position:'fixed',
+          position:'absolute',
           top: 0,
           right: 0,
           left: 0,
-          
-          height : '15%',
+          paddingBottom: '10px',
+          textAlign: 'center',
           width: '100%',
         }}>
         <img src="/logo512.png" alt="Vercel Logo" style={{
-          float:'right',
+          position:'absolute',
+          float: 'right',
+          top: 0,
+          right: '0px',
           height:'50px',
           width:'50px',
-          backgroundSize: 'contain',
-          backgroundPositionX:'right',
           margin: '0 0 0 0px',
           }} >
         </img>
@@ -38,35 +107,73 @@ export default function Top({ sensor }) {
         h1{
             color: rgb(255,255,255);
             margin-top: 10px;
-            margin-bottom:0px;
+            margin-bottom:10px;
             padding-top: 5px;
             padding-bottom:0px;
+            padding-left:5px;
           }
         p{
             color:rgb(255,255,255);
-            padding-top: 10px;
+            padding-top: 20px;
             margin-top: 0px;
         }
             `}</style>
       </div>
+      <div style = {{
+        marginTop: '200px',
+        marginBottom: '200px',
+        paddingBottom: '200px'
+      }}>
+     
+      <Line 
+          data = {PHTable} 
+          width="600px" 
+          height="200px" 
+      />
+      </div>
       <div className = "Body"
         style={{
-          textAlign: 'center'
+          textAlign: 'center',
+          paddingTop: '60px',
+          paddingBottom: '100px',
+          margimBottom: '50px'
         }}>
           <h1>
             Kondisi Tap Water Saat Ini
+
           </h1>
-          <ul>
-            {sensor.map((water_data) => (
-                    <li style= {{listStyleType:'none'}}>
-                        <h2>{water_data.time}</h2>
-                        <h3>{water_data.PH}</h3>
-                        <p>{water_data.Turbudity}</p>
-                        <p>{water_data.TDS}</p>
-                        <p>{water_data.Temp}</p>
-                    </li>
-            ))}
-          </ul>
+          <img src="/logo512.png" alt="New Logo" style={{
+    
+    height:'50px',
+    width:'50px',
+    margin: '0 0 0 0px',
+    }} >
+  </img>
+  {/* <Line 
+          data={PHTable} 
+          width="100px" 
+          height="200px" 
+          options={{
+          maintainAspectRatio: false
+           }}></Line> */}
+          {/* // style = {{
+          //   maxHeight: '80vh',
+          //   margin: '2rem',
+          //   display: 'flex',
+          //   flexDirection: 'column',
+          //   justifyContent: 'center',
+          //   alignItems: 'center',
+          // }} */}
+          
+          <h2> SENSOR</h2>
+          
+          <dl>
+            <dt>A title of the graph</dt>
+            <dd className="percentage"><span className="text"> Data 1: 20% </span></dd>
+            <dd className="percentage"><span className="text"> Data 2: 50% </span></dd>
+            <dd className="percentage"><span className="text"> Data 3: 30% </span></dd>
+          </dl>
+          <p>Tes Data</p>
           <style jsx>{`
         h1{
           margin: 100px 0px 0px 0px;
@@ -116,19 +223,56 @@ export default function Top({ sensor }) {
   )
 }
 
+
 export async function getStaticProps() {
     try {
         const client = await clientPromise;
         const db = client.db("watermonitoring");
-
+       
        const sensor = await db
            .collection("waterdatabase")
            .find({})
            .sort({ time: 1 })
            .limit(10)
            .toArray();
+       console.log("testing")
+       sensor.forEach(sensorRead => {
+        PHReadings.push(sensorRead.PH)
+        TurbudityReadings.push(sensorRead.Turbudity)
+        TDSReadings.push(sensorRead.TDS)
+        TempReadings.push(sensorRead.Temp)
+        DateReadings.push(sensorRead.time)
+       })
+       console.log("PH From MONGODB");
+       console.log(PHReadings);
+       const PHTable = {labels: DateReadings,
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: PHReadings,
+            fill: true,
+            borderWidth: 2,
+            lineTension: 1,
+            pointRadius: 3
+          }
+        ]};
+
+      
+
+       console.log(PHTable)
+       console.log("PH Table")
+       console.log(PHTable)
+       console.log("Turbudity From MONGODB");
+       console.log(TurbudityReadings);
+       console.log("TDS From MONGODB");
+       console.log(TDSReadings);
+       console.log("Temp From MONGODB");
+       console.log(TempReadings);
+       console.log("Date from MONGODB");
+       console.log(DateReadings);
         return {
-            props: { sensor: JSON.parse(JSON.stringify(sensor)) },
+            props: { sensor: JSON.parse(JSON.stringify(sensor))
+            ,PHTable: JSON.parse(JSON.stringify(PHTable)) }
         };
     } catch (e) {
         console.error(e);
