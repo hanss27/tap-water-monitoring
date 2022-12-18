@@ -55,13 +55,13 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
           textAlign: 'center',
           width: '100%',
         }}>
-        <img src="/logo512.png" alt="Vercel Logo" style={{
+        <img src="/FTUI.png" alt="Vercel Logo" style={{
           position:'absolute',
           float: 'right',
-          top: 0,
-          right: '0px',
-          height:'50px',
-          width:'50px',
+          top: '10px',
+          right: '10px',
+          height:'100px',
+          width:'275px',
           margin: '0 0 0 0px',
           }} >
         </img>
@@ -98,21 +98,14 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
           <h1>
             Kondisi Tap Water Saat Ini
           </h1>
-          <img src="/logo512.png" alt="New Logo" style={{
-    
-    height:'50px',
-    width:'50px',
-    margin: '0 0 0 0px',
-    }} >
-  </img>
 
           
         <h2> SENSOR</h2>
         <p>PH Meter</p>  
         <div style = {{
-          marginTop: '200px',
-          marginBottom: '200px',
-          paddingBottom: '200px',
+          marginTop: '10px',
+          marginBottom: '10px',
+          paddingBottom: '10px',
           paddingLeft: '200px',
           paddingRight: '200px'
         }}>
@@ -125,9 +118,9 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
         
         <p>TDS Meter</p> 
         <div style = {{
-          marginTop: '200px',
-          marginBottom: '200px',
-          paddingBottom: '200px',
+          marginTop: '10px',
+          marginBottom: '10px',
+          paddingBottom: '10px',
           paddingLeft: '200px',
           paddingRight: '200px'
         }}>
@@ -140,9 +133,9 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
 
         <p>Turbudity Meter</p>  
         <div style = {{
-          marginTop: '200px',
-          marginBottom: '200px',
-          paddingBottom: '200px',
+          marginTop: '10px',
+          marginBottom: '10px',
+          paddingBottom: '10px',
           paddingLeft: '200px',
           paddingRight: '200px'
         }}>
@@ -181,7 +174,7 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
 
           <div className="footer"
           style={{
-            backgroundColor: 'rgb(235, 195, 64)',
+            backgroundColor: 'rgb(255, 255,255)',
             textAlign: 'center',
             position:'fixed',
             bottom: 0,
@@ -232,35 +225,40 @@ export async function getStaticProps() {
           {
             label: "PH",
             data: PHReadings,
-            fill: true,
+            fill: false,
             borderWidth: 2,
-            lineTension: 1,
+            borderColor: 'blue',
+            lineTension: 0,
+            lineWidth: 2,
             pointRadius: 3
           }
         ]};
 
-        const TurbudityTable = {labels: DateReadings,
-          datasets: [
-            {
-              label: "Turbudity",
-              data: TurbudityReadings,
-              fill: true,
-              borderWidth: 2,
-              lineTension: 1,
-              pointRadius: 3
-            }
-          ]};
+        
         const TDSTable = {labels: DateReadings,
           datasets: [
             {
               label: "TDS",
               data: TDSReadings,
-              fill: true,
+              fill: false,
               borderWidth: 2,
-              lineTension: 1,
-              pointRadius: 3
+              borderColor: 'green',
+              pointRadius: 3,
+              tension: 0
             }
           ]};
+          const TurbudityTable = {labels: DateReadings,
+            datasets: [
+              {
+                label: "Turbudity",
+                data: TurbudityReadings,
+                fill: false,
+                borderWidth: 2,
+                borderColor: 'red',
+                lineTension: 1,
+                pointRadius: 3
+              }
+            ]};
 
 
        console.log("Turbudity From MONGODB");
