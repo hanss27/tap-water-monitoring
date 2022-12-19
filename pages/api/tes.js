@@ -7,9 +7,12 @@ export default async (req, res) => {
        const db = client.db("watermonitoring");
        switch (req.method){
         case "POST":
-            var x = new Date()
+            var x = new Date();
             var x1=x.toUTCString();// changing the display to UTC string
-            var x1=x.getFullYear() + "/" + x.getMonth() + "/" + x.getDate() + "/" + x.getHours() + ":" + x.getMinutes(); 
+          
+            x = convertUTCDateToLocalDate(x);
+            var month = x.getMonth() + 1;
+            var x1=x.getFullYear() + "/" + month + "/" + x.getDate() + "/" + x.getHours() + ":" + x.getMinutes(); 
             req.body.time = x1;
             let myPost = await db.collection("waterdatabase").insertOne(req.body);
             res.status(201).json(myPost);
@@ -29,3 +32,15 @@ export default async (req, res) => {
        console.error(e);
    }
 };
+
+
+function convertUTCDateToLocalDate(date) {
+    var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+    var offset = date.getTimezoneOffset() / 60;
+    var hours = date.getHours();
+
+    newDate.setHours(hours - offset);
+
+    return newDate;   
+}
