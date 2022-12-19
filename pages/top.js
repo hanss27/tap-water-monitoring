@@ -6,40 +6,8 @@ import {Bar, Line, Scatter, Bubble} from "react-chartjs-2"
 
 // import logo from "../resources/logo512.png";
 
-const weight = [60.0, 60.2, 59.1, 61.4, 59.9, 60.2, 59.8, 58.6, 59.6, 59.2];
 
-   
-
-
-const options = {
-  plugins:{
-    legend:{
-      display: false,
-    },
-  },
-  elements: {
-    line:{
-      tension: 0,
-      borderWidth: 2,
-      borderColor: "rgba(47,97,68,1)",
-      fill: "start",
-      backgroundColor: "rgba(47,97,68, 0.3)"
-    },
-    point:{
-      radius: 0,
-      hitRadius: 0,
-    },
-  },
-  scales: {
-    xAxis: {
-      display: false,
-    },
-    yAxis: {
-      display: false,
-    },
-  },
-};
-export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
+export default function Top({PHTable, TurbudityTable, TDSTable }) {
   return (
 
     <div>
@@ -195,32 +163,33 @@ export default function Top({ sensor, PHTable, TurbudityTable, TDSTable }) {
 }
 
 
+
 export async function getStaticProps() {
     try {
         const client = await clientPromise;
         const db = client.db("watermonitoring");
-       const PHReadings = [];
-       const TDSReadings = [];
-       const TempReadings = [];
-       const DateReadings = [];
-       const TurbudityReadings = [];
-       const sensor = await db
-           .collection("waterdatabase")
-           .find({})
-           .sort({ time: 1 })
-           .limit(10)
-           .toArray();
-       console.log("testing")
-       sensor.forEach(sensorRead => {
+        const PHReadings = [];
+        const TDSReadings = [];
+        const TempReadings = [];
+        const DateReadings = [];
+        const TurbudityReadings = [];
+   
+        const sensor = await db
+            .collection("waterdatabase")
+            .find({})
+            .sort({ time: 1 })
+            .limit(10)
+            .toArray();
+        sensor.forEach(sensorRead => {
         PHReadings.push(sensorRead.PH)
         TurbudityReadings.push(sensorRead.Turbudity)
         TDSReadings.push(sensorRead.TDS)
         TempReadings.push(sensorRead.Temp)
         DateReadings.push(sensorRead.time)
-       })
-       console.log("PH From MONGODB");
-       console.log(PHReadings);
-       const PHTable = {labels: DateReadings,
+        })
+        console.log("PH From MONGODB");
+        console.log(PHReadings);
+        const PHTable = {labels: DateReadings,
         datasets: [
           {
             label: "PH",
@@ -261,19 +230,18 @@ export async function getStaticProps() {
             ]};
 
 
-       console.log("Turbudity From MONGODB");
-       console.log(TurbudityReadings);
-       console.log("TDS From MONGODB");
-       console.log(TDSReadings);
-       console.log("Temp From MONGODB");
-       console.log(TempReadings);
-       console.log("Date from MONGODB");
-       console.log(DateReadings);
+        console.log("Turbudity From MONGODB");
+        console.log(TurbudityReadings);
+        console.log("TDS From MONGODB");
+        console.log(TDSReadings);
+        console.log("Temp From MONGODB");
+        console.log(TempReadings);
+        console.log("Date from MONGODB");
+        console.log(DateReadings);
 
         return {
             props: { 
-             sensor: JSON.parse(JSON.stringify(sensor))
-            ,PHTable: JSON.parse(JSON.stringify(PHTable))
+            PHTable: JSON.parse(JSON.stringify(PHTable))
             ,TurbudityTable: JSON.parse(JSON.stringify(TurbudityTable))
             ,TDSTable: JSON.parse(JSON.stringify(TDSTable))
           }
@@ -282,3 +250,16 @@ export async function getStaticProps() {
         console.error(e);
     }
 }
+// async function handler(req, res){
+//   const client = await clientPromise;
+//   const db = client.db("watermonitoring");
+//   switch (req.method){
+//     case "POST":
+//       console.log("tes");
+//       break;
+//     case "GET":
+//       console.log("GET tes");
+//       getStaticProps();
+//       break;
+//   }
+// }
