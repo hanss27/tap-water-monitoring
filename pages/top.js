@@ -224,7 +224,7 @@ export async function getServerSideProps() {
                 fill: false,
                 borderWidth: 2,
                 borderColor: 'red',
-                lineTension: 1,
+                lineTension: 0,
                 pointRadius: 3
               }
             ]};
