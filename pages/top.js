@@ -4,154 +4,80 @@ import {CategoryScale, Chart as ChartJS, Filler, Legend, LinearScale, LineElemen
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Filler, Title, Title, Tooltip, Legend);
 import {Bar, Line, Scatter, Bubble} from "react-chartjs-2"
 
-// import logo from "../resources/logo512.png";
+import headerStyles from './header.module.css'
+import bodyStyles from './body.module.css'
+import footerStyles from './footer.module.css'
+
+const options= {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+      yAxes: [{
+          ticks: {
+              beginAtZero:true
+          }
+      }]
+  },
+
+}
+
 
 
 export default function Top({PHTable, TurbudityTable, TDSTable }) {
   return (
 
     <div>
-      <div className="Header"
-        style={{
-          padding: '0',
-          backgroundColor:  'rgb(0, 0, 0)',
-          position:'absolute',
-          top: 0,
-          right: 0,
-          left: 0,
-          paddingBottom: '10px',
-          textAlign: 'center',
-          width: '100%',
-        }}>
-        <img src="/FTUI.png" alt="Vercel Logo" style={{
-          position:'absolute',
-          float: 'right',
-          top: '10px',
-          right: '10px',
-          height:'100px',
-          width:'275px',
-          margin: '0 0 0 0px',
-          }} >
-        </img>
-        
-        <h1 style={{
-            
-        }}>Welcome!</h1>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
-        <p>Kel 2.14: Tap Water Monitoring System</p>
-        <style jsx>{`
-        h1{
-            color: rgb(255,255,255);
-            margin-top: 10px;
-            margin-bottom:10px;
-            padding-top: 5px;
-            padding-bottom:0px;
-            padding-left:5px;
-          }
-        p{
-            color:rgb(255,255,255);
-            padding-top: 20px;
-            margin-top: 0px;
-        }
-            `}</style>
+      <div className={headerStyles.header}
+>
+        <img src="/FTUI.png" alt="Vercel Logo"  className = {headerStyles.headerImage}>
+        </img>
+        <h1 className={headerStyles.headerH1}>Welcome!</h1>
+        <p className = {headerStyles.headerP}>Kel 2.14: Tap Water Monitoring System</p>
       </div>
   
-      <div className = "Body"
-        style={{
-          textAlign: 'center',
-          paddingTop: '60px',
-          paddingBottom: '100px',
-          margimBottom: '50px'
-        }}>
-          <h1>
+      <div className = {bodyStyles.body}>
+          <h1 className={bodyStyles.bodyH1}>
             Kondisi Tap Water Saat Ini
-          </h1>
-
+          </h1>  
+          <p className= {bodyStyles.bodyP}>PH Meter</p>  
+          <div className={bodyStyles.graph}>
+          <Line
+              options={options}
+              data = {PHTable}
+              // responsive = "true" 
+              // width= "600px"
+              // heigh= "200px"
+          />
+          </div>
           
-        <h2> SENSOR</h2>
-        <p>PH Meter</p>  
-        <div style = {{
-          marginTop: '10px',
-          marginBottom: '10px',
-          paddingBottom: '10px',
-          paddingLeft: '200px',
-          paddingRight: '200px'
-        }}>
-        <Line 
-            data = {PHTable} 
-            width="600px" 
-            height="150px" 
-        />
-        </div>
-        
-        <p>TDS Meter</p> 
-        <div style = {{
-          marginTop: '10px',
-          marginBottom: '10px',
-          paddingBottom: '10px',
-          paddingLeft: '200px',
-          paddingRight: '200px'
-        }}>
-        <Line 
-          data = {TDSTable} 
-          width="600px" 
-          height="150px" 
-        />
-        </div>
+          <p>TDS Meter</p> 
+          <div className={bodyStyles.graph}>
+          <Line 
+            options={options}
+            data = {TDSTable} 
+            // width="600px" 
+            // height="150px" 
+          />
+          </div>
 
-        <p>Turbudity Meter</p>  
-        <div style = {{
-          marginTop: '10px',
-          marginBottom: '10px',
-          paddingBottom: '10px',
-          paddingLeft: '200px',
-          paddingRight: '200px'
-        }}>
-        <Line 
-          data = {TurbudityTable} 
-          width="600px" 
-          height="150px" 
-        />
-        </div>
-          <style jsx>{`
-        h1{
-          margin: 100px 0px 0px 0px;
-        }
-        h2{
-          
-        }
-        h3{
+          <p>Turbudity Meter</p>  
+          <div className={bodyStyles.graph}>
+          <Line 
+            options={options}
+            data = {TurbudityTable} 
+            // width="600px" 
+            // height="150px" 
+          />
+          </div>
 
-        }
-        p{
-            color: rgb(0,0,0);
-            margin-top: 10px;
-            margin-bottom:0px;
-            padding-top: 5px;
-            padding-bottom:0px;
-          }
-        ul{
-            color:rgb(0,0,0);
-            padding-top: 10px;
-            margin-top: 0px;
-        }
-
-            `}</style>
         </div>
       
 
-          <div className="footer"
-          style={{
-            backgroundColor: 'rgb(255, 255,255)',
-            textAlign: 'center',
-            position:'fixed',
-            bottom: 0,
-            right: 0,
-            left: 0,
-            width: "100%"
-          }}>
-          <p>Created by Desain Proyek Teknik Elektro 2019 Kelompok 2.14</p>
-        </div>
+          <div className={footerStyles.footer}>
+            <p className={footerStyles.footerP}>Created by Desain Proyek Teknik Elektro 2022 Kelompok 2.14</p>
+          </div>
 
 
 

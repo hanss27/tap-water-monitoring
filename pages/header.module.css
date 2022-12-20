@@ -1,0 +1,79 @@
+.header{
+  padding: 0;
+  background-color:  rgb(0, 0, 0);
+  position:absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding-bottom: 10px;
+  text-align: center;
+  width: 100%;
+}
+
+.headerImage{
+  position:absolute;
+  float: right;
+  top: 10px;
+  right: 10px;
+  max-width: 25%;
+  height:auto;
+  width:auto;
+  margin: 0 0 0 0px;
+}
+
+.headerH1{
+  color: rgb(255,255,255);
+  margin-top: 10px;
+  margin-bottom:10px;
+  padding-top: 5px;
+  padding-bottom:0px;
+  padding-left:5px;
+}
+
+.headerP{
+  color:rgb(255,255,255);
+            padding-top: 20px;
+            margin-top: 0px;
+}
+
+@media screen and (max-width:800px) {
+  .header{
+    width:100%;
+  }
+  .headerH1{
+    color: rgb(255,255,255);
+    margin-top: 10px;
+    margin-bottom:10px;
+    padding-top: 5px;
+    padding-bottom:0px;
+    padding-left:5px;
+    font-size: 25px;
+  }
+
+  .headerP{
+    color:rgb(255,255,255);
+    padding-top: 20px;
+    margin-top: 0px;
+    font-size: 14px;
+}
+  .headerImage{
+    position:absolute;
+    float: right;
+    top: 5px;
+    right: 5px;
+    max-width: 25%;
+    height:auto;
+    width:auto;
+    margin: 0 0 0 0px;
+  }
+}
+/* style={{
+  position:'absolute',
+  float: 'right',
+  top: '10px',
+  right: '10px',
+  height:'100px',
+  width:'275px',
+  margin: '0 0 0 0px',
+  }} */
+
