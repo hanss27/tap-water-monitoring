@@ -15,6 +15,7 @@ export default async (req, res) => {
             let hours;
             if (timeZone.includes('PM')){
                 hours = parseInt(readTime[0])+12;
+                if (hours == 24) hours = 12;
             }
             else{
                 hours = parseInt(readTime[0]);
