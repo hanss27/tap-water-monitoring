@@ -28,7 +28,9 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
 
     <div>
       <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-
+      <head>
+        <title>Fountain Water FTUI</title>
+      </head>
       <div className={headerStyles.header}
 >
         <img src="/FTUI.png" alt="Vercel Logo"  className = {headerStyles.headerImage}>
@@ -96,7 +98,6 @@ export async function getServerSideProps() {
         const db = client.db("watermonitoring");
         const PHReadings = [];
         const TDSReadings = [];
-        const TempReadings = [];
         const DateReadings = [];
         const TurbudityReadings = [];
    
@@ -104,13 +105,11 @@ export async function getServerSideProps() {
             .collection("waterdatabase")
             .find({})
             .sort({ time: 1 })
-            .limit(10)
             .toArray();
         sensor.forEach(sensorRead => {
         PHReadings.push(sensorRead.PH)
         TurbudityReadings.push(sensorRead.Turbudity)
         TDSReadings.push(sensorRead.TDS)
-        TempReadings.push(sensorRead.Temp)
         DateReadings.push(sensorRead.time)
         })
         console.log("PH From MONGODB");
@@ -160,8 +159,7 @@ export async function getServerSideProps() {
         console.log(TurbudityReadings);
         console.log("TDS From MONGODB");
         console.log(TDSReadings);
-        console.log("Temp From MONGODB");
-        console.log(TempReadings);
+
         console.log("Date from MONGODB");
         console.log(DateReadings);
 
