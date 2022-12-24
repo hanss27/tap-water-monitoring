@@ -27,11 +27,8 @@
   height: 150px;
 }
 .graph{
-  margin-top: 10px;
-  margin-bottom: 0px;
-  padding-bottom: 10px;
-  padding-left: 420px;
-  padding-right: 200px;
+  margin: 0 auto;
+  padding: 0 aut0;
   height: 300px;
   width: 600px;
 }
@@ -46,9 +43,8 @@
     font-size: 20px;
   }
   .graph{
-    margin-top: 10px;
-    padding-left:0px;
-    margin-left: 0px;
+    margin: 0 auto;
+    padding: 0 auto;
     width:300px;
     height: 200px;
   }
@@ -59,12 +55,8 @@
     width: 100%;
   }
   .graph{
-    margin-top: 10px;
-    margin-bottom: 0px;
-    padding-bottom: 10px;
-    padding-left: 25vw;
-
-    padding-right: 200px;
+    margin: 0 auto;
+    padding: 0 auto;
     height: 300px;
     width: 600px;
   }

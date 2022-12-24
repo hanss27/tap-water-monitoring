@@ -27,23 +27,20 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
   return (
 
     <div>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <head>
-        <title>Fountain Water FTUI</title>
-      </head>
-      <div className={headerStyles.header}
->
-        <img src="/FTUI.png" alt="Vercel Logo"  className = {headerStyles.headerImage}>
-        </img>
+      <title>Fountain Water FTUI</title>
+      <div className={headerStyles.header}>
         <h1 className={headerStyles.headerH1}>Welcome!</h1>
         <p className = {headerStyles.headerP}>Kel 2.14: Tap Water Monitoring System</p>
+        <img src="/FTUI.png" alt="Vercel Logo"  className = {headerStyles.headerImage}>
+        </img>
+        
       </div>
   
       <div className = {bodyStyles.body}>
           <h1 className={bodyStyles.bodyH1}>
             Kondisi Tap Water Saat Ini
           </h1>  
-          <p className= {bodyStyles.bodyP}>PH Meter</p>  
+          <h1>PH Meter</h1>  
           <div className={bodyStyles.graph}>
           <Line
               options={options}
@@ -54,7 +51,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
           />
           </div>
           
-          <p>TDS Meter</p> 
+          <h1>TDS Meter</h1> 
           <div className={bodyStyles.graph}>
           <Line 
             options={options}
@@ -64,7 +61,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
           />
           </div>
 
-          <p>Turbudity Meter</p>  
+          <h1>Turbudity Meter</h1>  
           <div className={bodyStyles.graph}>
           <Line 
             options={options}
@@ -137,10 +134,11 @@ export async function getServerSideProps() {
               fill: false,
               borderWidth: 2,
               borderColor: 'green',
-              pointRadius: 3,
-              tension: 0
+              lineTension: 0,
+              pointRadius: 3
             }
           ]};
+
           const TurbudityTable = {labels: DateReadings,
             datasets: [
               {
@@ -159,7 +157,6 @@ export async function getServerSideProps() {
         console.log(TurbudityReadings);
         console.log("TDS From MONGODB");
         console.log(TDSReadings);
-
         console.log("Date from MONGODB");
         console.log(DateReadings);
 
