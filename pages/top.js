@@ -30,7 +30,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
       <title>Fountain Water FTUI</title>
       <div className={headerStyles.header}>
         <h1 className={headerStyles.headerH1}>Welcome!</h1>
-        <p className = {headerStyles.headerP}>Kel 2.14: Tap Water Monitoring System</p>
+        <p className = {headerStyles.headerP}>Tap Water Gedung K FTUI Monitoring System</p>
         <img src="/FTUI.png" alt="Vercel Logo"  className = {headerStyles.headerImage}>
         </img>
         
@@ -40,7 +40,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
           <h1 className={bodyStyles.bodyH1}>
             Kondisi Tap Water Saat Ini
           </h1>  
-          <h1>PH Meter</h1>  
+          <h2 className={bodyStyles.bodyH2}>PH Meter</h2>  
           <div className={bodyStyles.graph}>
           <Line
               options={options}
@@ -51,7 +51,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
           />
           </div>
           
-          <h1>TDS Meter</h1> 
+          <h2 className={bodyStyles.bodyH2}>TDS Meter</h2> 
           <div className={bodyStyles.graph}>
           <Line 
             options={options}
@@ -61,7 +61,7 @@ export default function Top({PHTable, TurbudityTable, TDSTable }) {
           />
           </div>
 
-          <h1>Turbudity Meter</h1>  
+          <h2 className={bodyStyles.bodyH2}>Turbudity Meter</h2>  
           <div className={bodyStyles.graph}>
           <Line 
             options={options}
